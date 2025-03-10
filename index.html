@@ -3,33 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
+    <title>Radinka Alifasya</title>
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- AOS CSS untuk animasi scroll -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
-        * {
+        /* Reset khusus untuk landing page */
+        body, html {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            height: 100%;
             font-family: 'Poppins', sans-serif;
         }
         
-        body {
+        /* Style untuk landing page */
+        .landing-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: #0f0f0f;
             color: #fff;
-            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
-            overflow: hidden;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
         }
         
-        .background {
+        .landing-page.hidden {
+            opacity: 0;
+            pointer-events: none;
+            z-index: -1; /* Memastikan landing page benar-benar tersembunyi */
+        }
+        
+        .landing-background {
             position: absolute;
             top: 0;
             left: 0;
@@ -43,7 +58,7 @@
             transition: all 0.5s ease;
         }
         
-        .overlay {
+        .landing-overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -51,6 +66,7 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
             z-index: 1;
+            transition: opacity 0.5s ease;
         }
         
         .text-container {
@@ -58,6 +74,7 @@
             z-index: 2;
             text-align: center;
             padding: 20px;
+            transition: opacity 0.5s ease;
         }
         
         .click-text {
@@ -101,37 +118,555 @@
             100% { width: 0; right: 0; left: auto; }
         }
         
-        body:hover .click-text {
+        .landing-page:hover .click-text {
             color: #ffffff;
             letter-spacing: 10px;
             transition: all 0.5s ease;
         }
         
-        body:hover .background {
+        .landing-page:hover .landing-background {
             filter: blur(5px);
+        }
+        
+        /* Style untuk main content */
+        .main-content {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .main-content.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        /* Memastikan ukuran profile card konsisten */
+        .main-content .container {
+            width: 100%;
+            max-width: 500px;
+            z-index: 1;
+        }
+        
+        .main-content .profile-card {
+            width: 100%;
+            background-color: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Peningkatan UI/UX untuk sosial media icons */
+        .social-icon {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-icon:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            transform: scale(0);
+            transition: transform 0.5s;
+            border-radius: 50%;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .social-icon:hover:before {
+            transform: scale(2);
+        }
+        
+        /* Warna khusus untuk setiap platform */
+        .github:hover { color: #333; background-color: #fff; }
+        .twitter:hover { color: #fff; background-color: #1DA1F2; }
+        .instagram:hover { 
+            color: #fff; 
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+        .youtube:hover { color: #fff; background-color: #FF0000; }
+        .twitch:hover { color: #fff; background-color: #6441A4; }
+        .facebook:hover { color: #fff; background-color: #4267B2; }
+        .spotify:hover { color: #fff; background-color: #1DB954; }
+        
+        /* Tooltip styles */
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .tooltip::before {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent rgba(0, 0, 0, 0.8) transparent;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .tooltip:hover::after,
+        .tooltip:hover::before {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Efek hover untuk tombol */
+        .control-buttons button, .playlist-button button, .discord-add {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .control-buttons button:hover, .playlist-button button:hover, .discord-add:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .control-buttons button::after, .playlist-button button::after, .discord-add::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .control-buttons button:hover::after, .playlist-button button:hover::after, .discord-add:hover::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        
+        /* Loading Skeleton Effect */
+        @keyframes skeleton-loading {
+            0% {
+                background-position: -200px 0;
+            }
+            100% {
+                background-position: calc(200px + 100%) 0;
+            }
+        }
+        
+        .skeleton {
+            background-color: #333;
+            background-image: linear-gradient(90deg, #333, #444, #333);
+            background-size: 200px 100%;
+            background-repeat: no-repeat;
+            border-radius: 4px;
+            display: inline-block;
+            line-height: 1;
+            width: 100%;
+            animation: skeleton-loading 1.5s ease-in-out infinite;
+        }
+        
+        .skeleton-text {
+            height: 1em;
+            margin-bottom: 8px;
+            border-radius: 3px;
+        }
+        
+        .skeleton-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto;
+        }
+        
+        .skeleton-hidden {
+            display: none;
+        }
+        
+        /* Tombol Kembali ke Atas */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #1DB954;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Perbaikan untuk efek glitch pada nama */
+        .name-container, .bio-container {
+            position: relative;
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        .profile-name {
+            position: relative;
+            display: inline-block;
+            margin: 15px 0 5px;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+                        -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+                        0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+            animation: glitch 2000ms infinite;
+        }
+        
+        .profile-name::before,
+        .profile-name::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            clip: rect(0, 0, 0, 0);
+        }
+        
+        .profile-name::before {
+            left: 2px;
+            text-shadow: -1px 0 #ff0000;
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+        }
+        
+        .profile-name::after {
+            left: -2px;
+            text-shadow: 1px 0 #00ffff;
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+        
+        .profile-name:not(.typing-done)::after {
+            content: '|';
+            position: absolute;
+            right: -8px;
+            left: auto;
+            top: auto;
+            width: auto;
+            height: auto;
+            clip: auto;
+            text-shadow: none;
+            animation: cursor-blink 1s infinite;
+            color: #1DB954;
         }
     </style>
 </head>
-<body onclick="goToMainPage()">
-    <div class="background"></div>
-    <div class="overlay"></div>
-    <div class="text-container">
-        <div class="click-text">Click Anywhere</div>
+<body>
+    <!-- Landing Page -->
+    <div class="landing-page" id="landing-page">
+        <div class="landing-background" id="landing-background"></div>
+        <div class="landing-overlay" id="landing-overlay"></div>
+        <div class="text-container" id="landing-text">
+            <div class="click-text">Click Anywhere</div>
+        </div>
     </div>
     
+    <!-- Main Content -->
+    <div class="main-content" id="main-content">
+        <div class="container">
+            <div class="profile-card" data-aos="fade-up" data-aos-duration="800">
+                <div class="view-count">
+                    <i class="fas fa-eye"></i> <span id="view-counter">0</span>
+                </div>
+                
+                <div class="profile-header">
+                    <div class="profile-img" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="skeleton skeleton-circle" id="profile-img-skeleton"></div>
+                        <img src="https://64.media.tumblr.com/ce963442a850aeab75787da9db78925b/96e3853056a61acc-21/s1280x1920/ee9b0679501230c8e73b6b3f6f905653e7c41679.gifv" alt="Profile Picture" id="profile-picture" style="display: none;">
+                    </div>
+                    <div class="name-container" style="position: relative; margin-bottom: 5px;">
+                        <div class="skeleton skeleton-text" style="width: 70%; margin: 10px 0 5px;" id="profile-name-skeleton"></div>
+                        <h1 class="profile-name" id="profile-name" data-text="" data-aos="fade-right" data-aos-delay="400" style="display: none;"></h1>
+                    </div>
+                    <div class="bio-container" style="position: relative; margin-top: 0; margin-bottom: -10px;">
+                        <div class="skeleton skeleton-text" style="width: 50%;" id="profile-bio-skeleton"></div>
+                        <p class="profile-bio" id="profile-bio" data-aos="fade-left" data-aos-delay="500" style="display: none; margin: 0;"></p>
+                    </div>
+                </div>
+                
+                <div class="social-links" data-aos="fade-up" data-aos-delay="600" style="margin-top: 0;">
+                    <a href="https://github.com/radincuyy" target="_blank" class="social-icon github tooltip" data-tooltip="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://twitter.com/radincuyy" target="_blank" class="social-icon twitter tooltip" data-tooltip="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/radincuyy" target="_blank" class="social-icon instagram tooltip" data-tooltip="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@lilsponxxx" target="_blank" class="social-icon youtube tooltip" data-tooltip="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.twitch.tv/radincuyy" target="_blank" class="social-icon twitch tooltip" data-tooltip="Twitch"><i class="fab fa-twitch"></i></a>
+                    <a href="https://www.facebook.com/radincuyy" target="_blank" class="social-icon facebook tooltip" data-tooltip="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://open.spotify.com/user/31lylj5gutlve3st3x6ath7gb4nq" target="_blank" class="social-icon spotify tooltip" data-tooltip="Spotify"><i class="fab fa-spotify"></i></a>
+                </div>
+                
+                <div class="timezone-section" data-aos="fade-up" data-aos-delay="700" style="margin-top: 15px;">
+                    <a href="https://time.is/Bekasi" target="_blank" class="timezone-link">
+                        <i class="fas fa-link"></i> Timezone
+                    </a>
+                </div>
+                
+                <div class="discord-section" data-aos="fade-up" data-aos-delay="800" style="margin-top: 15px;">
+                    <div class="discord-user">
+                        <img src="https://i.pravatar.cc/300" alt="Discord Profile" class="discord-img">
+                        <span class="discord-name">@radinkaa</span>
+                    </div>
+                    <a href="#" target="_blank" class="discord-add" id="discord-add-btn">Add on Discord <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="music-player" data-aos="fade-up" data-aos-delay="900" style="margin-top: 15px;">
+                    <div class="music-info">
+                        <p class="song-title" id="current-track-title">Pilih lagu</p>
+                        <p class="song-artist" id="current-track-artist">Artis</p>
+                    </div>
+                    <div class="player-controls">
+                        <div class="progress-container">
+                            <span class="current-time">00:00</span>
+                            <div class="progress-bar">
+                                <div class="progress"></div>
+                            </div>
+                            <span class="duration">00:00</span>
+                        </div>
+                        <div class="control-buttons">
+                            <div class="shuffle-container" style="position: absolute; left: 0;">
+                                <button class="shuffle-btn" id="shuffle"><i class="fas fa-random"></i></button>
+                            </div>
+                            <div class="center-buttons">
+                                <button class="prev-btn" id="prev-track"><i class="fas fa-step-backward"></i></button>
+                                <button class="play-btn" id="play-pause"><i class="fas fa-play"></i></button>
+                                <button class="next-btn" id="next-track"><i class="fas fa-step-forward"></i></button>
+                            </div>
+                            <div class="volume-control">
+                                <i class="fas fa-volume-up"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playlist-button">
+                        <button id="toggle-playlist">Spotify Playlist</button>
+                    </div>
+                    <div class="spotify-playlist" id="spotify-playlist" style="display: none;">
+                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4kM2ZYjfPO48E8Qb3lK8xD?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tombol Kembali ke Atas -->
+        <div class="back-to-top" id="back-to-top">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+    <script src="js/discord.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
+    <!-- AOS JS untuk animasi scroll -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
+        // Fungsi untuk beralih dari landing page ke halaman utama
         function goToMainPage() {
             // Animasi transisi
-            document.querySelector('.background').style.filter = 'none';
-            document.querySelector('.background').style.transform = 'scale(1.02)';
-            document.querySelector('.overlay').style.opacity = '0';
-            document.querySelector('.text-container').style.opacity = '0';
+            document.getElementById('landing-background').style.transform = 'scale(1.02)';
+            document.getElementById('landing-overlay').style.opacity = '0';
+            document.getElementById('landing-text').style.opacity = '0';
             
-            // Tunggu animasi selesai baru pindah halaman
+            // Tunggu animasi selesai baru tampilkan halaman utama
             setTimeout(function() {
-                window.location.href = 'main.html';
+                document.getElementById('landing-page').classList.add('hidden');
+                document.getElementById('main-content').classList.add('active');
+                
+                // Inisialisasi Vanilla Tilt setelah halaman utama ditampilkan
+                initMainPage();
             }, 500);
         }
+        
+        // Inisialisasi halaman utama
+        function initMainPage() {
+            // Inisialisasi AOS
+            AOS.init({
+                once: true, // animasi hanya dijalankan sekali
+                mirror: false,
+                disable: 'mobile' // nonaktifkan pada perangkat mobile untuk performa
+            });
+            
+            // Inisialisasi Vanilla Tilt
+            VanillaTilt.init(document.querySelector(".profile-card"), {
+                max: 15,
+                speed: 300,
+                scale: 1,
+                glare: true,
+                "max-glare": 0.1,
+                gyroscope: true,
+                gyroscopeMinAngleX: -45,
+                gyroscopeMaxAngleX: 45,
+                gyroscopeMinAngleY: -45,
+                gyroscopeMaxAngleY: 45,
+                perspective: 1000
+            });
+            
+            // Efek typing untuk nama dan bio
+            // Data untuk typing effect
+            const profileName = "Radinka Alifasya";
+            const profileBio = "Memento Mori";
+            
+            // Elemen target
+            const nameElement = document.getElementById('profile-name');
+            const bioElement = document.getElementById('profile-bio');
+            const profileNameSkeleton = document.getElementById('profile-name-skeleton');
+            const profileBioSkeleton = document.getElementById('profile-bio-skeleton');
+            
+            // Fungsi untuk efek typing
+            function typeEffect(element, text, skeletonElement, speed = 100, delay = 0) {
+                let i = 0;
+                element.textContent = '';
+                if (element.hasAttribute('data-text')) {
+                    element.setAttribute('data-text', text);
+                }
+                
+                // Tampilkan elemen yang akan diketik
+                setTimeout(() => {
+                    // Sembunyikan skeleton dan tampilkan elemen asli
+                    skeletonElement.classList.add('skeleton-hidden');
+                    element.style.display = 'inline-block';
+                    
+                    const typingInterval = setInterval(() => {
+                        if (i < text.length) {
+                            element.textContent += text.charAt(i);
+                            if (element.hasAttribute('data-text')) {
+                                element.setAttribute('data-text', element.textContent);
+                            }
+                            i++;
+                        } else {
+                            clearInterval(typingInterval);
+                            element.classList.add('typing-done');
+                        }
+                    }, speed);
+                }, delay);
+            }
+            
+            // Jalankan efek typing
+            typeEffect(nameElement, profileName, profileNameSkeleton, 100, 1000);
+            typeEffect(bioElement, profileBio, profileBioSkeleton, 100, profileName.length * 100 + 1500);
+            
+            // Menangani loading gambar profil
+            const profileImg = document.getElementById('profile-picture');
+            const profileImgSkeleton = document.getElementById('profile-img-skeleton');
+            
+            profileImg.onload = function() {
+                // Sembunyikan skeleton dan tampilkan gambar asli
+                profileImgSkeleton.classList.add('skeleton-hidden');
+                profileImg.style.display = 'block';
+            };
+            
+            // Jika gambar gagal dimuat atau timeout
+            profileImg.onerror = function() {
+                profileImgSkeleton.classList.add('skeleton-hidden');
+                profileImg.src = 'https://i.pravatar.cc/300'; // Fallback image
+                profileImg.style.display = 'block';
+            };
+            
+            // Timeout untuk menghindari loading yang terlalu lama
+            setTimeout(() => {
+                if (profileImgSkeleton.classList.contains('skeleton-hidden') === false) {
+                    profileImgSkeleton.classList.add('skeleton-hidden');
+                    profileImg.style.display = 'block';
+                }
+            }, 3000);
+        }
+        
+        // Tambahkan event listener untuk landing page
+        document.getElementById('landing-page').addEventListener('click', goToMainPage);
+        
+        // Increment view counter
+        document.addEventListener('DOMContentLoaded', function() {
+            // Increment view counter
+            let viewCount = localStorage.getItem('viewCount') || 0;
+            viewCount = parseInt(viewCount) + 1;
+            localStorage.setItem('viewCount', viewCount);
+            document.getElementById('view-counter').textContent = viewCount;
+        });
+        
+        // Tombol Kembali ke Atas
+        window.addEventListener('scroll', function() {
+            const backToTopButton = document.getElementById('back-to-top');
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        document.getElementById('back-to-top').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
     </script>
 </body>
 </html> 

@@ -487,23 +487,30 @@ body::after {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
-    margin: 5px 0;
+    margin-top: 10px;
     position: relative;
     width: 100%;
+    height: 40px;
+}
+
+.center-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
 }
 
 .volume-control {
     position: absolute;
     right: 10px;
-    color: #ccc;
-    font-size: 14px;
-    cursor: pointer;
-    transition: color 0.2s ease;
-    padding: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #ccc;
+    font-size: 14px;
+    padding: 5px;
 }
 
 .volume-control i {
@@ -617,8 +624,6 @@ body::after {
 }
 
 .shuffle-btn {
-    position: absolute;
-    left: 4px;
     color: #888;
     font-size: 14px;
     cursor: pointer;
