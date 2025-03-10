@@ -1,0 +1,760 @@
+/* Reset dan Styling Dasar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: #0f0f0f;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://64.media.tumblr.com/cecbbeb4e89ae1e24d2d25363fce031e/3057d72f20fbb610-a2/s500x750/b2f45e54f96860d61efbaba8d340be30f98cc3f5.gifv') no-repeat center center;
+    background-size: cover;
+    filter: none;
+    transform: scale(1.02);
+    z-index: -2;
+}
+
+body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: -1;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    z-index: 1;
+}
+
+/* Profile Card */
+.profile-card {
+    background-color: rgba(30, 30, 30, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
+    transition: all 0.3s ease;
+}
+
+.profile-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.js-tilt-glare {
+    border-radius: 15px;
+}
+
+/* View Counter */
+.view-count {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 14px;
+    color: #ccc;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Profile Header */
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-top: 10px;
+    transform: translateZ(20px);
+}
+
+.profile-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 15px;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transform: translateZ(30px);
+}
+
+.profile-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-name {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 15px 0 5px;
+    color: #fff;
+    position: relative;
+    display: inline-block;
+    text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+                -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+                0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+    animation: glitch 2000ms infinite;
+}
+
+.profile-name::before,
+.profile-name::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    clip: rect(0, 0, 0, 0);
+}
+
+.profile-name::before {
+    left: 2px;
+    text-shadow: -1px 0 #ff0000;
+    animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+
+.profile-name::after {
+    left: -2px;
+    text-shadow: 1px 0 #00ffff;
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+/* Cursor typing effect */
+.profile-name:not(.typing-done)::after {
+    content: '|';
+    position: absolute;
+    right: -8px;
+    left: auto;
+    top: auto;
+    width: auto;
+    height: auto;
+    clip: auto;
+    text-shadow: none;
+    animation: cursor-blink 1s infinite;
+    color: #1DB954;
+}
+
+.profile-bio {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 20px;
+    font-style: italic;
+    position: relative;
+    display: inline-block;
+}
+
+.profile-bio::after {
+    content: '';
+    position: absolute;
+    right: -8px;
+    color: #1DB954;
+    opacity: 0;
+    animation: cursor-blink 1s infinite;
+}
+
+.profile-bio:not(.typing-done)::after {
+    opacity: 1;
+}
+
+@keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes glitch {
+    0% {
+        text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+                    -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+                    0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+    14% {
+        text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+                    -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+                    0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+    15% {
+        text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+                    0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+                    -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+    49% {
+        text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+                    0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+                    -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+    50% {
+        text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+                    0.05em 0 0 rgba(0, 255, 0, 0.75),
+                    0 -0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+    99% {
+        text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+                    0.05em 0 0 rgba(0, 255, 0, 0.75),
+                    0 -0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+    100% {
+        text-shadow: -0.025em 0 0 rgba(255, 0, 0, 0.75),
+                    -0.025em -0.025em 0 rgba(0, 255, 0, 0.75),
+                    -0.025em -0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+}
+
+@keyframes glitch-anim-1 {
+    0% {
+        clip: rect(2px, 9999px, 56px, 0);
+    }
+    10% {
+        clip: rect(120px, 9999px, 12px, 0);
+    }
+    20% {
+        clip: rect(76px, 9999px, 73px, 0);
+    }
+    30% {
+        clip: rect(15px, 9999px, 34px, 0);
+    }
+    40% {
+        clip: rect(45px, 9999px, 98px, 0);
+    }
+    50% {
+        clip: rect(82px, 9999px, 31px, 0);
+    }
+    60% {
+        clip: rect(32px, 9999px, 49px, 0);
+    }
+    70% {
+        clip: rect(63px, 9999px, 94px, 0);
+    }
+    80% {
+        clip: rect(51px, 9999px, 78px, 0);
+    }
+    90% {
+        clip: rect(4px, 9999px, 43px, 0);
+    }
+    100% {
+        clip: rect(89px, 9999px, 24px, 0);
+    }
+}
+
+@keyframes glitch-anim-2 {
+    0% {
+        clip: rect(65px, 9999px, 32px, 0);
+    }
+    10% {
+        clip: rect(12px, 9999px, 76px, 0);
+    }
+    20% {
+        clip: rect(24px, 9999px, 51px, 0);
+    }
+    30% {
+        clip: rect(93px, 9999px, 7px, 0);
+    }
+    40% {
+        clip: rect(38px, 9999px, 25px, 0);
+    }
+    50% {
+        clip: rect(54px, 9999px, 81px, 0);
+    }
+    60% {
+        clip: rect(19px, 9999px, 38px, 0);
+    }
+    70% {
+        clip: rect(42px, 9999px, 65px, 0);
+    }
+    80% {
+        clip: rect(67px, 9999px, 13px, 0);
+    }
+    90% {
+        clip: rect(35px, 9999px, 57px, 0);
+    }
+    100% {
+        clip: rect(72px, 9999px, 46px, 0);
+    }
+}
+
+/* Social Links */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    transform: translateZ(15px);
+}
+
+.social-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    background-color: rgba(30, 30, 30, 0.8);
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 18px;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px);
+    color: #fff;
+}
+
+.discord {
+    color: #5865F2;
+}
+
+.steam {
+    color: #66c0f4;
+}
+
+.github {
+    color: #fff;
+}
+
+.windows {
+    color: #00adef;
+}
+
+.gamepad {
+    color: #E60012;
+}
+
+.epic-games {
+    color: #fff;
+}
+
+.rocket {
+    color: #f5b324;
+}
+
+/* Timezone Section */
+.timezone-section {
+    margin: 20px 0;
+    text-align: center;
+    transform: translateZ(10px);
+}
+
+.timezone-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.timezone-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Discord Section */
+.discord-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 25px 0;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    transform: translateZ(5px);
+}
+
+.discord-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.discord-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.discord-name {
+    font-size: 14px;
+    color: #ccc;
+}
+
+.discord-add {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+}
+
+.discord-add:hover {
+    color: #5865F2;
+}
+
+/* Music Player */
+.music-player {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 15px;
+    transform: translateZ(10px);
+}
+
+.music-info {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.song-title {
+    font-size: 14px;
+    margin: 0;
+    text-align: center;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.song-artist {
+    font-size: 12px;
+    margin: 0;
+    text-align: center;
+    color: #ccc;
+    font-weight: 400;
+    margin-bottom: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#current-track-title {
+    color: #fff;
+}
+
+#current-track-artist {
+    color: #ccc;
+}
+
+.player-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.control-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 5px 0;
+    position: relative;
+    width: 100%;
+}
+
+.volume-control {
+    position: absolute;
+    right: 10px;
+    color: #ccc;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.volume-control i {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    line-height: 14px;
+    text-align: center;
+}
+
+.volume-control:hover {
+    color: #fff;
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.current-time, .duration {
+    font-size: 11px;
+    color: #ccc;
+    min-width: 35px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: height 0.2s ease;
+    z-index: 1;
+}
+
+.progress-bar:hover {
+    height: 6px;
+}
+
+.progress-bar:hover .progress {
+    background-color: #1ed760;
+}
+
+.progress-bar.dragging {
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.progress-bar.dragging .progress {
+    background-color: #1ed760;
+}
+
+.progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 0;
+    transition: width 0.1s linear, background-color 0.2s ease;
+}
+
+/* Tambahkan thumb/handle untuk slider */
+.progress::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.progress-bar:hover .progress::after,
+.progress-bar.dragging .progress::after {
+    opacity: 1;
+}
+
+.control-buttons button {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 5px;
+}
+
+.control-buttons button:hover {
+    color: #ccc;
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+.play-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shuffle-btn {
+    position: absolute;
+    left: 4px;
+    color: #888;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shuffle-btn.active {
+    color: #1DB954;
+}
+
+.playlist-button {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.playlist-button button {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    min-width: 100px;
+}
+
+.playlist-button button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Platform Icons */
+.platform-icons {   
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.platform-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(30, 30, 30, 0.8);
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.platform-icon:hover {
+    transform: translateY(-3px);
+    color: #fff;
+}
+
+.platform-icon .fa-discord {
+    color: #5865F2;
+}
+
+.platform-icon .fa-steam {
+    color: #66c0f4;
+}
+
+.platform-icon .fa-github {
+    color: #fff;
+}
+
+.platform-icon .fa-windows {
+    color: #00adef;
+}
+
+.platform-icon .fa-gamepad {
+    color: #E60012;
+}
+
+.platform-icon .fa-epic-games {
+    color: #fff;
+}
+
+.platform-icon .fa-rocket {
+    color: #f5b324;
+}
+
+/* Spotify Playlist */
+.spotify-playlist {
+    margin-top: 15px;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+}
+
+.spotify-playlist.active {
+    margin-top: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .profile-card {
+        padding: 15px;
+        width: 100%;
+    }
+    
+    .profile-img {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 15px;
+    }
+    
+    .profile-name {
+        font-size: 20px;
+    }
+    
+    .social-links {
+        gap: 10px;
+    }
+    
+    .social-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+}
