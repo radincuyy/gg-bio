@@ -170,13 +170,24 @@ body::after {
     color: #1DB954;
 }
 
+.bio-container {
+    position: relative;
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
 .profile-bio {
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 20px;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
     font-style: italic;
     position: relative;
     display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
 }
 
 .profile-bio::after {
