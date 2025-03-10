@@ -15,11 +15,11 @@ Proyek ini adalah web profile yang terinspirasi dari platform e-z.bio. Template 
 - **Responsif**: Tampilan yang menyesuaikan dengan berbagai ukuran layar
 - **Efek 3D**: Efek tilt 3D pada kartu profil menggunakan Vanilla Tilt
 - **Integrasi Discord**: Menampilkan profil Discord dengan avatar dan username
+- **Autoplay Musik**: Fitur autoplay musik saat navigasi dari landing page
 
 ## Struktur File
 
-- `index.html` - Halaman landing dengan efek blur dan teks "Click Anywhere"
-- `main.html` - Halaman utama dengan profil, musik player, dan fitur lainnya
+- `index.html` - Halaman utama dengan landing page dan profil
 - `css/style.css` - Stylesheet utama untuk halaman profil
 - `js/script.js` - JavaScript untuk fungsionalitas musik player dan fitur lainnya
 - `js/discord.js` - JavaScript untuk integrasi Discord
@@ -33,36 +33,42 @@ Proyek ini adalah web profile yang terinspirasi dari platform e-z.bio. Template 
   - Young and Beautiful.mp3
   - Igloo.mp3
 
-## Cara Menggunakan
+## Cara Menjalankan Proyek Secara Lokal
 
-1. Clone atau download repository ini
-2. Buka file `index.html` di browser untuk melihat halaman landing
-3. Klik di mana saja pada halaman landing untuk masuk ke halaman profil utama (`main.html`)
-4. Untuk deployment di Vercel atau hosting lainnya:
-   - Upload semua file ke hosting Anda
-   - Pastikan `index.html` adalah halaman landing
-   - Halaman utama akan diakses melalui `main.html`
+1. Clone repositori ini ke direktori lokal Anda:
+   ```bash
+   git clone https://github.com/radincuyy/gg-bio.git
+   ```
+2. Buka folder proyek:
+   ```bash
+   cd gg-bio
+   ```
+3. Buka file `index.html` di browser Anda atau gunakan server lokal seperti Live Server di VSCode.
+4. Klik di mana saja pada halaman landing untuk masuk ke halaman profil utama.
+
+## Deployment
+
+Untuk deployment di Vercel, Netlify, atau hosting lainnya:
+1. Upload semua file ke hosting Anda
+2. Pastikan `index.html` adalah halaman utama
+3. Tidak diperlukan konfigurasi khusus karena proyek ini menggunakan HTML, CSS, dan JavaScript murni
 
 ## Kustomisasi
 
 ### Mengubah Profil
 
-Edit bagian berikut di `main.html`:
+Edit bagian berikut di `index.html`:
 
 ```javascript
 // Efek typing untuk nama dan bio
-document.addEventListener('DOMContentLoaded', function() {
-    // Data untuk typing effect
-    const profileName = "Radinka Alifasya";
-    const profileBio = "Memento Mori";
-    
-    // ... kode lainnya ...
-});
+// Data untuk typing effect
+const profileName = "Radinka Alifasya";
+const profileBio = "Memento Mori";
 ```
 
 ### Mengubah Foto Profil
 
-Ubah URL gambar profil di `main.html`:
+Ubah URL gambar profil di `index.html`:
 
 ```html
 <img src="https://64.media.tumblr.com/ce963442a850aeab75787da9db78925b/96e3853056a61acc-21/s1280x1920/ee9b0679501230c8e73b6b3f6f905653e7c41679.gifv" alt="Profile Picture" id="profile-picture">
@@ -94,7 +100,7 @@ Tambahkan atau ubah file MP3 di folder `audio/` dan perbarui array `songs` di fi
 
 ### Mengubah Playlist Spotify
 
-Ubah URL iframe Spotify di `main.html`:
+Ubah URL iframe Spotify di `index.html`:
 
 ```html
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4kM2ZYjfPO48E8Qb3lK8xD?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
@@ -123,6 +129,15 @@ Pemutar musik mendukung:
 - Progress bar interaktif
 - Mode shuffle
 - Integrasi dengan playlist Spotify
+- Autoplay saat navigasi dari landing page
+
+## Pembaruan Terbaru
+
+- Perbaikan layout untuk tampilan yang lebih kompak
+- Penambahan fitur autoplay musik
+- Perbaikan posisi tombol shuffle
+- Optimasi untuk performa yang lebih baik
+- Perbaikan integrasi Discord
 
 ## Catatan Teknis
 
@@ -130,6 +145,7 @@ Pemutar musik mendukung:
 - Pemutar musik menggunakan HTML5 Audio API untuk memutar file MP3 lokal
 - Efek 3D menggunakan library Vanilla Tilt
 - Integrasi Discord menggunakan pendekatan statis dengan avatar yang dimuat dari CDN Discord
+- Animasi menggunakan AOS (Animate On Scroll) library
 
 ## Lisensi
 
