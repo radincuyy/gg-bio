@@ -45,7 +45,7 @@ body::after {
 
 .container {
     width: 100%;
-    max-width: 500px;
+    max-width: 700px;
     z-index: 1;
 }
 
@@ -98,16 +98,16 @@ body::after {
     flex-direction: column;
     align-items: center;
     margin-bottom: 25px;
-    padding-top: 10px;
+    padding-top: 5px;
     transform: translateZ(20px);
 }
 
 .profile-img {
-    width: 100px;
-    height: 100px;
+    width: 125px;
+    height: 125px;
     border-radius: 50%;
     overflow: hidden;
-    margin-bottom: 15px;
+    margin-bottom: 1px;
     border: 3px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     transform: translateZ(30px);
@@ -312,23 +312,22 @@ body::after {
     display: flex;
     justify-content: center;
     gap: 15px;
-    margin: 20px 0;
+    margin: 0;
     flex-wrap: wrap;
-    transform: translateZ(15px);
 }
 
 .social-icon {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 35px;
-    height: 35px;
+    width: 45px;
+    height: 45px;
     background-color: rgba(30, 30, 30, 0.8);
     border-radius: 50%;
     color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     transition: all 0.3s ease;
-    font-size: 18px;
+    font-size: 22px;
 }
 
 .social-icon:hover {
@@ -390,13 +389,19 @@ body::after {
 /* Discord Section */
 .discord-section {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 25px 0;
+    flex-direction: column;
+    margin: 15px 0;
     padding: 15px;
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
     transform: translateZ(5px);
+}
+
+.discord-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .discord-user {
@@ -418,24 +423,26 @@ body::after {
 }
 
 .discord-add {
-    color: #fff;
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #5865F2;
+    color: white;
+    border-radius: 5px;
+    font-size: 12px;
     text-decoration: none;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
     transition: all 0.3s ease;
 }
 
 .discord-add:hover {
-    color: #5865F2;
+    background-color: #4752c4;
+    transform: translateY(-2px);
 }
 
 /* Music Player */
 .music-player {
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
-    padding: 10px;
+    padding: 15px;
     margin-top: 15px;
     transform: translateZ(10px);
 }
@@ -734,6 +741,46 @@ body::after {
 
 .spotify-playlist.active {
     margin-top: 15px;
+}
+
+/* Media Queries for Responsive Layout */
+@media (min-width: 768px) {
+    .profile-header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .profile-img {
+        flex: 0 0 auto;
+    }
+    
+    .name-bio-container {
+        flex: 1;
+        text-align: left;
+    }
+    
+    .name-container, .bio-container {
+        text-align: left;
+    }
+    
+    /* Layout dua kolom untuk tampilan desktop */
+    .profile-sections {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 20px;
+    }
+    
+    .section-left, .section-right {
+        flex: 1;
+        min-width: 250px;
+    }
+    
+    .timezone-section, .discord-section, .music-player {
+        height: 100%;
+        margin: 0 0 15px 0;
+    }
 }
 
 /* Responsive Design */

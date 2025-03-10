@@ -445,11 +445,11 @@
                         <div class="skeleton skeleton-circle" id="profile-img-skeleton"></div>
                         <img src="https://64.media.tumblr.com/ce963442a850aeab75787da9db78925b/96e3853056a61acc-21/s1280x1920/ee9b0679501230c8e73b6b3f6f905653e7c41679.gifv" alt="Profile Picture" id="profile-picture" style="display: none;">
                     </div>
-                    <div class="name-container" style="position: relative; margin-bottom: 5px;">
+                    <div class="name-container" style="position: relative; margin-bottom: 2px;">
                         <div class="skeleton skeleton-text" style="width: 70%; margin: 10px 0 5px;" id="profile-name-skeleton"></div>
                         <h1 class="profile-name" id="profile-name" data-text="" data-aos="fade-right" data-aos-delay="400" style="display: none;"></h1>
                     </div>
-                    <div class="bio-container" style="position: relative; margin-top: 0; margin-bottom: -10px;">
+                    <div class="bio-container" style="position: relative; margin-top: -20px; margin-bottom: -15px;">
                         <div class="skeleton skeleton-text" style="width: 50%;" id="profile-bio-skeleton"></div>
                         <p class="profile-bio" id="profile-bio" data-aos="fade-left" data-aos-delay="500" style="display: none; margin: 0;"></p>
                     </div>
@@ -472,11 +472,14 @@
                 </div>
                 
                 <div class="discord-section" data-aos="fade-up" data-aos-delay="800" style="margin-top: 15px;">
-                    <div class="discord-user">
-                        <img src="https://i.pravatar.cc/300" alt="Discord Profile" class="discord-img">
-                        <span class="discord-name">@radinkaa</span>
+                    <div class="discord-header">
+                        <div class="discord-user">
+                            <img src="https://i.pravatar.cc/300" alt="Discord Profile" class="discord-img">
+                            <span class="discord-name">@radinkaa</span>
+                        </div>
+                        <a href="#" target="_blank" class="discord-add" id="discord-add-btn">Add on Discord <i class="fas fa-arrow-right"></i></a>
                     </div>
-                    <a href="#" target="_blank" class="discord-add" id="discord-add-btn">Add on Discord <i class="fas fa-arrow-right"></i></a>
+                    <!-- Aktivitas Discord akan ditambahkan di sini oleh discord.js -->
                 </div>
                 
                 <div class="music-player" data-aos="fade-up" data-aos-delay="900" style="margin-top: 15px;">
@@ -644,11 +647,20 @@
         
         // Increment view counter
         document.addEventListener('DOMContentLoaded', function() {
-            // Increment view counter
-            let viewCount = localStorage.getItem('viewCount') || 0;
-            viewCount = parseInt(viewCount) + 1;
+            // Generate random view count between 100-10000
+            let viewCount;
+            
+            // Check if viewCount already exists in localStorage
+            if (localStorage.getItem('viewCount')) {
+                // Get existing count and increment it
+                viewCount = parseInt(localStorage.getItem('viewCount')) + 1;
+            } else {
+                // Generate random number between 100-10000 for first visit
+                viewCount = Math.floor(Math.random() * (10000 - 100 + 1)) + 100;
+            }
+            
             localStorage.setItem('viewCount', viewCount);
-            document.getElementById('view-counter').textContent = viewCount;
+            document.getElementById('view-counter').textContent = viewCount.toLocaleString();
         });
         
         // Tombol Kembali ke Atas
