@@ -1,6 +1,6 @@
-# EZ-Bio Web Profile
+# GG-Bio Web Profile
 
-Proyek ini adalah template web profile yang terinspirasi dari platform e-z.bio. Template ini memiliki tampilan modern dengan tema gelap dan berbagai fitur interaktif yang menarik.
+Proyek ini adalah web profile yang terinspirasi dari platform e-z.bio. Template ini memiliki tampilan modern dengan tema gelap dan berbagai fitur interaktif yang menarik.
 
 ## Fitur
 
