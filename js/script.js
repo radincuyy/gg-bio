@@ -53,9 +53,9 @@ function initMusicPlayer() {
     // Daftar lagu lokal
     const songs = [
         {
-            title: 'Igloo',
-            artist: 'Kiss of Life',
-            file: 'audio/Igloo.mp3'
+            title: 'West Coast',
+            artist: 'Lana Del Rey',
+            file: 'audio/West Coast.mp3'
         },
         {
             title: 'Young and Beautiful',
@@ -68,9 +68,9 @@ function initMusicPlayer() {
             file: 'audio/Radio.mp3'
         },
         {
-            title: 'Samurai',
-            artist: 'Call me Karizma',
-            file: 'audio/Samurai.mp3'
+            title: 'Runaway',
+            artist: 'AURORA',
+            file: 'audio/Runaway.mp3'
         },
         {
             title: 'Disenchanted',
@@ -83,9 +83,9 @@ function initMusicPlayer() {
             file: 'audio/See you again.mp3'
         },
         {
-            title: 'Kawaki wo Ameku',
-            artist: 'Akano',
-            file: 'audio/Kawaki wo Ameku.mp3'
+            title: 'About You',
+            artist: 'The 1975',
+            file: 'audio/About You.mp3'
         },
         {
             title: 'Cancer',
