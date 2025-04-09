@@ -2,37 +2,6 @@
 
 Proyek ini adalah web profile yang terinspirasi dari platform e-z.bio. Template ini memiliki tampilan modern dengan tema gelap dan berbagai fitur interaktif yang menarik.
 
-## Fitur
-
-- **Landing Page Menarik**: Halaman landing dengan efek blur dan animasi teks "Click Anywhere"
-- **Efek Typing**: Animasi mengetik untuk nama dan bio saat halaman utama dimuat
-- **Efek Glitch**: Efek distorsi digital pada nama profil untuk tampilan yang unik
-- **Desain Modern**: Tampilan gelap dengan efek blur dan transparansi
-- **Profil Pengguna**: Tampilkan foto profil, nama, dan bio
-- **Sosial Media**: Tombol untuk berbagai platform sosial media
-- **Pemutar Musik**: Pemutar musik interaktif dengan playlist lagu lokal
-- **Integrasi Spotify**: Widget playlist Spotify yang dapat diakses dengan tombol
-- **Responsif**: Tampilan yang menyesuaikan dengan berbagai ukuran layar
-- **Efek 3D**: Efek tilt 3D pada kartu profil menggunakan Vanilla Tilt
-- **Integrasi Discord**: Menampilkan profil Discord dengan avatar dan username
-- **Autoplay Musik**: Fitur autoplay musik saat navigasi dari landing page
-
-## Struktur File
-
-- `index.html` - Halaman utama dengan landing page dan profil
-- `css/style.css` - Stylesheet utama untuk halaman profil
-- `js/script.js` - JavaScript untuk fungsionalitas musik player dan fitur lainnya
-- `js/discord.js` - JavaScript untuk integrasi Discord
-- `audio/` - Direktori berisi file musik lokal (MP3)
-  - Samurai.mp3
-  - Kawaki wo Ameku.mp3
-  - See You Again.mp3
-  - Cancer.mp3
-  - Disenchanted.mp3
-  - Radio.mp3
-  - Young and Beautiful.mp3
-  - Igloo.mp3
-
 ## Cara Menjalankan Proyek Secara Lokal
 
 1. Clone repositori ini ke direktori lokal Anda:
@@ -110,32 +79,9 @@ Ubah URL iframe Spotify di `index.html`:
 
 Edit file `js/discord.js` untuk mengubah Discord User ID dan Discord Tag.
 
-## Fitur Khusus
-
-### Efek Typing
-
-Nama dan bio ditampilkan dengan efek mengetik saat halaman dimuat, memberikan kesan interaktif.
-
-### Efek Glitch
-
-Nama profil memiliki efek glitch digital yang memberikan tampilan unik dan modern.
-
-### Pemutar Musik
-
-Pemutar musik mendukung:
-- Putar/jeda lagu
-- Navigasi lagu (sebelumnya/selanjutnya)
-- Pengaturan volume
-- Progress bar interaktif
-- Mode shuffle
-- Integrasi dengan playlist Spotify
-- Autoplay saat navigasi dari landing page
 
 ## Pembaruan Terbaru
 
-- Perbaikan layout untuk tampilan yang lebih kompak
-- Penambahan fitur autoplay musik
-- Perbaikan posisi tombol shuffle
 - Optimasi untuk performa yang lebih baik
 - Perbaikan integrasi Discord
 
@@ -145,7 +91,6 @@ Pemutar musik mendukung:
 - Pemutar musik menggunakan HTML5 Audio API untuk memutar file MP3 lokal
 - Efek 3D menggunakan library Vanilla Tilt
 - Integrasi Discord menggunakan pendekatan statis dengan avatar yang dimuat dari CDN Discord
-- Animasi menggunakan AOS (Animate On Scroll) library
 
 ## Lisensi
 
