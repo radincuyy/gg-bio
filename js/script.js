@@ -74,12 +74,12 @@ function initMusicPlayer() {
         {
             title: 'See you again ft. Kali Uchis',
             artist: 'Tyler, The Creator, Kali Uchis',
-            file: 'audio/See you again.mp3'
+            file: 'audio/See You Again.mp3'
         },
         {
-            title: 'West Coast',
+            title: 'White Mustang',
             artist: 'Lana Del Rey',
-            file: 'audio/West Coast.mp3'
+            file: 'audio/White Mustang.mp3'
         },
         {
             title: 'Cancer',
