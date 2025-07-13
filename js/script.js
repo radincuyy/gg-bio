@@ -1,24 +1,19 @@
 // Inisialisasi counter view
 document.addEventListener('DOMContentLoaded', function() {
-    // Increment view counter
     let viewCount = localStorage.getItem('viewCount') || 0;
     viewCount = parseInt(viewCount) + 1;
     localStorage.setItem('viewCount', viewCount);
     document.getElementById('view-counter').textContent = viewCount;
     
-    // Inisialisasi social icons
     initSocialIcons();
     
-    // Inisialisasi music player dengan lagu lokal
     initMusicPlayer();
     
-    // Inisialisasi toggle playlist
     initPlaylistToggle();
 });
 
 // Fungsi untuk inisialisasi social icons
 function initSocialIcons() {
-    // Tambahkan event listener untuk social icons
     const socialIcons = document.querySelectorAll('.social-icon');
     socialIcons.forEach(icon => {
         icon.addEventListener('mouseenter', function() {
@@ -44,7 +39,6 @@ function initMusicPlayer() {
     const currentTrackArtistEl = document.getElementById('current-track-artist');
     const volumeControl = document.querySelector('.volume-control i');
     
-    // Periksa apakah elemen yang diperlukan ada
     if (!playPauseBtn || !prevTrackBtn || !nextTrackBtn || !progressBar || !currentTrackTitleEl || !currentTrackArtistEl || !shuffleBtn) {
         console.warn('Beberapa elemen kontrol player tidak ditemukan');
         return;
@@ -53,14 +47,14 @@ function initMusicPlayer() {
     // Daftar lagu lokal
     const songs = [
         {
-            title: 'West Coast',
-            artist: 'Lana Del Rey',
-            file: 'audio/West Coast.mp3'
+            title: 'What It Sounds Like',
+            artist: 'HUNTRIX',
+            file: 'audio/What It Sounds Like.mp3'
         },
         {
-            title: 'Young and Beautiful',
+            title: 'Dark Paradise',
             artist: 'Lana Del Rey',
-            file: 'audio/Young and Beautiful.mp3'
+            file: 'audio/Dark Paradise.mp3'
         },
         {
             title: 'Radio',
@@ -83,15 +77,20 @@ function initMusicPlayer() {
             file: 'audio/See you again.mp3'
         },
         {
-            title: 'About You',
-            artist: 'The 1975',
-            file: 'audio/About You.mp3'
+            title: 'West Coast',
+            artist: 'Lana Del Rey',
+            file: 'audio/West Coast.mp3'
         },
         {
             title: 'Cancer',
             artist: 'My Chemical Romance',
             file: 'audio/Cancer.mp3'
         },
+        {
+            tittle: 'White Mustang',
+            artist: 'Lana Del Rey',
+            file: 'audio/White Mustang.mp3'
+        }
     ];
     
     // Inisialisasi audio player
