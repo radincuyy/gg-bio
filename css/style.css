@@ -1,9 +1,11 @@
-/* Reset dan Styling Dasar */
+/* ========================================
+   Reset dan Styling Dasar
+   ======================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
@@ -12,15 +14,16 @@ body {
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     padding: 20px;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 body::before {
     content: '';
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -34,7 +37,7 @@ body::before {
 
 body::after {
     content: '';
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -47,20 +50,21 @@ body::after {
     width: 100%;
     max-width: 700px;
     z-index: 1;
+    margin: auto 0;
 }
 
-/* Profile Card */
+/* ========================================
+   Profile Card
+   ======================================== */
 .profile-card {
-    background-color: rgba(30, 30, 30, 0.8);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    background-color: rgba(30, 30, 30, 0.95);
+    border-radius: 20px;
+    padding: 35px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     position: relative;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transform-style: preserve-3d;
-    transform: perspective(1000px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    will-change: transform;
     transition: all 0.3s ease;
 }
 
@@ -71,14 +75,25 @@ body::after {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
-    z-index: -1;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
     pointer-events: none;
+    z-index: 0;
 }
 
-.js-tilt-glare {
-    border-radius: 15px;
+/* Backdrop blur hanya untuk desktop */
+@media (min-width: 768px) {
+    .profile-card {
+        backdrop-filter: blur(12px);
+        background-color: rgba(30, 30, 30, 0.85);
+    }
+    
+    .profile-card:hover {
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        border-color: rgba(255, 255, 255, 0.12);
+    }
 }
+
+
 
 /* View Counter */
 .view-count {
@@ -97,39 +112,62 @@ body::after {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 25px;
-    padding-top: 5px;
+    margin-bottom: 20px;
+    padding-top: 10px;
     transform: translateZ(20px);
 }
 
 .profile-img {
-    width: 125px;
-    height: 125px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
     overflow: hidden;
-    margin-bottom: 1px;
-    border: 3px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    margin-bottom: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     transform: translateZ(30px);
+    transition: all 0.3s ease;
+}
+
+.profile-img:hover {
+    transform: translateZ(30px) scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 
 .profile-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.profile-img:hover img {
+    transform: scale(1.1);
+}
+
+.name-container {
+    position: relative;
+    text-align: center;
+    margin-bottom: 8px;
 }
 
 .profile-name {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
     font-weight: 700;
-    margin: 15px 0 5px;
+    margin: 0;
     color: #fff;
     position: relative;
     display: inline-block;
     text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
-                -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
-                0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
-    animation: glitch 2000ms infinite;
+        -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+        0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+}
+
+/* Glitch animation hanya untuk desktop */
+@media (min-width: 768px) {
+    .profile-name {
+        animation: glitch 2000ms infinite;
+    }
 }
 
 .profile-name::before,
@@ -176,18 +214,18 @@ body::after {
     width: 100%;
     max-width: 100%;
     overflow: hidden;
+    margin-bottom: 20px;
 }
 
 .profile-bio {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
     font-style: italic;
     position: relative;
     display: inline-block;
     max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
     line-height: 1.4;
+    margin: 0;
 }
 
 .profile-bio::after {
@@ -204,45 +242,58 @@ body::after {
 }
 
 @keyframes cursor-blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
 }
 
 @keyframes glitch {
     0% {
         text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
-                    -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
-                    0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+            -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+            0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
     }
+
     14% {
         text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
-                    -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
-                    0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+            -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+            0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
     }
+
     15% {
         text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
-                    0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
-                    -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+            0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+            -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
     }
+
     49% {
         text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
-                    0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
-                    -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+            0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+            -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
     }
+
     50% {
         text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
-                    0.05em 0 0 rgba(0, 255, 0, 0.75),
-                    0 -0.05em 0 rgba(0, 0, 255, 0.75);
+            0.05em 0 0 rgba(0, 255, 0, 0.75),
+            0 -0.05em 0 rgba(0, 0, 255, 0.75);
     }
+
     99% {
         text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
-                    0.05em 0 0 rgba(0, 255, 0, 0.75),
-                    0 -0.05em 0 rgba(0, 0, 255, 0.75);
+            0.05em 0 0 rgba(0, 255, 0, 0.75),
+            0 -0.05em 0 rgba(0, 0, 255, 0.75);
     }
+
     100% {
         text-shadow: -0.025em 0 0 rgba(255, 0, 0, 0.75),
-                    -0.025em -0.025em 0 rgba(0, 255, 0, 0.75),
-                    -0.025em -0.05em 0 rgba(0, 0, 255, 0.75);
+            -0.025em -0.025em 0 rgba(0, 255, 0, 0.75),
+            -0.025em -0.05em 0 rgba(0, 0, 255, 0.75);
     }
 }
 
@@ -250,33 +301,43 @@ body::after {
     0% {
         clip: rect(2px, 9999px, 56px, 0);
     }
+
     10% {
         clip: rect(120px, 9999px, 12px, 0);
     }
+
     20% {
         clip: rect(76px, 9999px, 73px, 0);
     }
+
     30% {
         clip: rect(15px, 9999px, 34px, 0);
     }
+
     40% {
         clip: rect(45px, 9999px, 98px, 0);
     }
+
     50% {
         clip: rect(82px, 9999px, 31px, 0);
     }
+
     60% {
         clip: rect(32px, 9999px, 49px, 0);
     }
+
     70% {
         clip: rect(63px, 9999px, 94px, 0);
     }
+
     80% {
         clip: rect(51px, 9999px, 78px, 0);
     }
+
     90% {
         clip: rect(4px, 9999px, 43px, 0);
     }
+
     100% {
         clip: rect(89px, 9999px, 24px, 0);
     }
@@ -286,44 +347,56 @@ body::after {
     0% {
         clip: rect(65px, 9999px, 32px, 0);
     }
+
     10% {
         clip: rect(12px, 9999px, 76px, 0);
     }
+
     20% {
         clip: rect(24px, 9999px, 51px, 0);
     }
+
     30% {
         clip: rect(93px, 9999px, 7px, 0);
     }
+
     40% {
         clip: rect(38px, 9999px, 25px, 0);
     }
+
     50% {
         clip: rect(54px, 9999px, 81px, 0);
     }
+
     60% {
         clip: rect(19px, 9999px, 38px, 0);
     }
+
     70% {
         clip: rect(42px, 9999px, 65px, 0);
     }
+
     80% {
         clip: rect(67px, 9999px, 13px, 0);
     }
+
     90% {
         clip: rect(35px, 9999px, 57px, 0);
     }
+
     100% {
         clip: rect(72px, 9999px, 46px, 0);
     }
 }
 
-/* Social Links */
+/* ========================================
+   Social Links
+   ======================================== */
 .social-links {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    margin: 0;
+    gap: 12px;
+    margin: 15px 0;
     flex-wrap: wrap;
 }
 
@@ -331,52 +404,40 @@ body::after {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 45px;
-    height: 45px;
-    background-color: rgba(30, 30, 30, 0.8);
-    border-radius: 50%;
-    color: rgba(255, 255, 255, 0.9);
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.85);
     text-decoration: none;
-    transition: all 0.3s ease;
-    font-size: 22px;
+    transition: all 0.25s ease;
+    font-size: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .social-icon:hover {
-    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.1);
     color: #fff;
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
-.discord {
-    color: #5865F2;
+/* Disable hover effects on touch devices */
+@media (hover: none) {
+    .social-icon:hover {
+        transform: none;
+    }
+    .social-icon:active {
+        transform: scale(0.95);
+        background: rgba(255, 255, 255, 0.12);
+    }
 }
 
-.steam {
-    color: #66c0f4;
-}
 
-.github {
-    color: #fff;
-}
-
-.windows {
-    color: #00adef;
-}
-
-.gamepad {
-    color: #E60012;
-}
-
-.epic-games {
-    color: #fff;
-}
-
-.rocket {
-    color: #f5b324;
-}
 
 /* Timezone Section */
 .timezone-section {
-    margin: 20px 0;
+    margin: 15px 0;
     text-align: center;
     transform: translateZ(10px);
 }
@@ -386,15 +447,19 @@ body::after {
     align-items: center;
     gap: 8px;
     padding: 10px 20px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 30px;
-    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .timezone-link:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: #fff;
 }
 
 /* Discord Section */
@@ -402,17 +467,24 @@ body::after {
     display: flex;
     flex-direction: column;
     margin: 15px 0;
-    padding: 15px;
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
+    padding: 14px;
+    background-color: rgba(255, 255, 255, 0.04);
+    border-radius: 14px;
     transform: translateZ(5px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.3s ease;
+}
+
+.discord-section:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.08);
 }
 
 .discord-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 0;
 }
 
 .discord-user {
@@ -422,66 +494,82 @@ body::after {
 }
 
 .discord-img {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     object-fit: cover;
 }
 
 .discord-name {
-    font-size: 14px;
+    font-size: 13px;
     color: #ccc;
 }
 
 .discord-add {
-    display: inline-block;
-    padding: 6px 12px;
-    background-color: #5865F2;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: #5865F2;
     color: white;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 12px;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
+    font-weight: 500;
 }
 
 .discord-add:hover {
-    background-color: #4752c4;
-    transform: translateY(-2px);
+    background: #4752c4;
+    transform: translateY(-1px);
 }
 
-/* Music Player */
+/* ========================================
+   Music Player
+   ======================================== */
 .music-player {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    padding: 18px;
     margin-top: 15px;
     transform: translateZ(10px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Subtle effect saat playing */
+.music-player.playing {
+    background-color: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.08);
 }
 
 .music-info {
     text-align: center;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 }
 
 .song-title {
-    font-size: 14px;
+    font-size: 16px;
     margin: 0;
     text-align: center;
     color: #fff;
-    font-weight: 700;
-    margin-bottom: 2px;
+    font-weight: 600;
+    margin-bottom: 6px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    letter-spacing: -0.01em;
 }
 
 .song-artist {
-    font-size: 12px;
+    font-size: 14px;
     margin: 0;
     text-align: center;
-    color: #ccc;
+    color: rgba(255, 255, 255, 0.55);
     font-weight: 400;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -549,7 +637,8 @@ body::after {
     gap: 8px;
 }
 
-.current-time, .duration {
+.current-time,
+.duration {
     font-size: 11px;
     color: #ccc;
     min-width: 35px;
@@ -558,8 +647,8 @@ body::after {
 .progress-bar {
     flex: 1;
     height: 4px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
     overflow: hidden;
     position: relative;
     cursor: pointer;
@@ -571,17 +660,8 @@ body::after {
     height: 6px;
 }
 
-.progress-bar:hover .progress {
-    background-color: #1ed760;
-}
-
 .progress-bar.dragging {
-    height: 8px;
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.progress-bar.dragging .progress {
-    background-color: #1ed760;
+    height: 6px;
 }
 
 .progress {
@@ -589,9 +669,10 @@ body::after {
     top: 0;
     left: 0;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.9);
     width: 0;
-    transition: width 0.1s linear, background-color 0.2s ease;
+    transition: width 0.1s linear;
+    border-radius: 10px;
 }
 
 /* Tambahkan thumb/handle untuk slider */
@@ -626,9 +707,8 @@ body::after {
 }
 
 .control-buttons button:hover {
-    color: #ccc;
+    color: #fff;
     transform: scale(1.1);
-    filter: brightness(1.2);
 }
 
 .play-btn {
@@ -658,90 +738,34 @@ body::after {
 
 .playlist-button {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 15px;
     display: flex;
     justify-content: center;
     gap: 10px;
 }
 
 .playlist-button button {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    border: none;
-    padding: 5px 15px;
-    border-radius: 30px;
-    font-size: 12px;
-    font-weight: 600;
+    background-color: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    min-width: 100px;
 }
 
 .playlist-button button:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-}
-
-/* Platform Icons */
-.platform-icons {   
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 15px;
-    flex-wrap: wrap;
-}
-
-.platform-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30px;
-    height: 30px;
-    background-color: rgba(30, 30, 30, 0.8);
-    border-radius: 50%;
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    transition: all 0.3s ease;
-    font-size: 16px;
-}
-
-.platform-icon:hover {
-    transform: translateY(-3px);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.12);
     color: #fff;
 }
 
-.platform-icon .fa-discord {
-    color: #5865F2;
-}
 
-.platform-icon .fa-steam {
-    color: #66c0f4;
-}
-
-.platform-icon .fa-github {
-    color: #fff;
-}
-
-.platform-icon .fa-windows {
-    color: #00adef;
-}
-
-.platform-icon .fa-gamepad {
-    color: #E60012;
-}
-
-.platform-icon .fa-epic-games {
-    color: #fff;
-}
-
-.platform-icon .fa-rocket {
-    color: #f5b324;
-}
 
 /* Spotify Playlist */
 .spotify-playlist {
@@ -754,6 +778,11 @@ body::after {
     margin-top: 15px;
 }
 
+.spotify-playlist iframe {
+    max-width: 100%;
+    height: 152px;
+}
+
 /* Media Queries for Responsive Layout */
 @media (min-width: 768px) {
     .profile-header {
@@ -761,20 +790,21 @@ body::after {
         align-items: center;
         gap: 20px;
     }
-    
+
     .profile-img {
         flex: 0 0 auto;
     }
-    
+
     .name-bio-container {
         flex: 1;
         text-align: left;
     }
-    
-    .name-container, .bio-container {
+
+    .name-container,
+    .bio-container {
         text-align: left;
     }
-    
+
     /* Layout dua kolom untuk tampilan desktop */
     .profile-sections {
         display: flex;
@@ -782,42 +812,115 @@ body::after {
         gap: 15px;
         margin-top: 20px;
     }
-    
-    .section-left, .section-right {
+
+    .section-left,
+    .section-right {
         flex: 1;
         min-width: 250px;
     }
-    
-    .timezone-section, .discord-section, .music-player {
+
+    .timezone-section,
+    .discord-section,
+    .music-player {
         height: 100%;
         margin: 0 0 15px 0;
     }
 }
 
-/* Responsive Design */
+/* ========================================
+   Responsive Design - Mobile
+   ======================================== */
 @media (max-width: 600px) {
-    .profile-card {
+    /* Disable expensive animations on mobile */
+    * {
+        animation-duration: 0s !important;
+        transition-duration: 0.15s !important;
+    }
+    
+    body {
         padding: 15px;
+        align-items: flex-start;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    
+    .container {
+        margin: 0;
+    }
+
+    .profile-card {
+        padding: 20px 15px;
         width: 100%;
+        max-height: none;
+        transform: none !important;
     }
     
+    /* Disable glitch animation on mobile */
+    .profile-name,
+    .profile-name::before,
+    .profile-name::after {
+        animation: none !important;
+    }
+
     .profile-img {
-        width: 80px;
-        height: 80px;
-        margin-bottom: 15px;
+        width: 100px;
+        height: 100px;
+        margin-bottom: 12px;
     }
-    
+
     .profile-name {
-        font-size: 20px;
+        font-size: 1.5rem;
     }
-    
+
+    .profile-bio {
+        font-size: 0.85rem;
+    }
+
     .social-links {
         gap: 10px;
     }
-    
+
     .social-icon {
-        width: 35px;
-        height: 35px;
+        width: 38px;
+        height: 38px;
         font-size: 16px;
+    }
+
+    .discord-section {
+        padding: 12px;
+    }
+
+    .discord-header {
+        flex-direction: row;
+        gap: 8px;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .discord-add {
+        padding: 8px 12px;
+        font-size: 11px;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    
+    .discord-user {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .discord-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .music-player {
+        padding: 12px;
+    }
+    
+    .spotify-playlist iframe {
+        width: 100%;
+        height: 152px;
     }
 }

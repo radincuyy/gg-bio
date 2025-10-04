@@ -47,6 +47,16 @@ function initMusicPlayer() {
     // Daftar lagu lokal
     const songs = [
         {
+            title: 'MIRAGE',
+            artist: 'Takanashi Kiara',
+            file: 'audio/MIRAGE.mp3'
+        },
+        {
+            title: 'The Emptiness Machine',
+            artist: 'Linkin Park',
+            file: 'audio/The Emptiness Machine.mp3'
+        },
+        {
             title: 'What It Sounds Like',
             artist: 'HUNTRIX',
             file: 'audio/What It Sounds Like.mp3'
@@ -86,16 +96,11 @@ function initMusicPlayer() {
             artist: 'My Chemical Romance',
             file: 'audio/Cancer.mp3'
         },
-        {
-            tittle: 'White Mustang',
-            artist: 'Lana Del Rey',
-            file: 'audio/White Mustang.mp3'
-        }
     ];
     
     // Inisialisasi audio player
     const audioPlayer = new Audio();
-    let currentSongIndex = 0;
+    let currentSongIndex = Math.floor(Math.random() * songs.length); // Random song saat load
     let isPlaying = false;
     let isMuted = false;
     let isShuffleMode = false;
@@ -172,11 +177,16 @@ function initMusicPlayer() {
     
     // Toggle play/pause
     function togglePlay() {
+        const musicPlayer = document.getElementById('music-player');
+        
         if (isPlaying) {
             // Jeda audio
             audioPlayer.pause();
             isPlaying = false;
             playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            
+            // Remove playing class
+            if (musicPlayer) musicPlayer.classList.remove('playing');
         } else {
             // Putar audio dengan penanganan error
             const playPromise = audioPlayer.play();
@@ -187,12 +197,18 @@ function initMusicPlayer() {
                     // Autoplay berhasil
                     isPlaying = true;
                     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    
+                    // Add playing class
+                    if (musicPlayer) musicPlayer.classList.add('playing');
                 })
                 .catch(error => {
                     // Autoplay diblokir atau error lainnya
                     console.error('Error playing audio:', error);
                     isPlaying = false;
                     playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                    
+                    // Remove playing class
+                    if (musicPlayer) musicPlayer.classList.remove('playing');
                 });
             }
         }
@@ -232,7 +248,23 @@ function initMusicPlayer() {
     });
     
     // Ketika lagu selesai, putar lagu berikutnya
-    audioPlayer.addEventListener('ended', nextSong);
+    audioPlayer.addEventListener('ended', function() {
+        const musicPlayer = document.getElementById('music-player');
+        if (musicPlayer) musicPlayer.classList.remove('playing');
+        nextSong();
+    });
+    
+    // Ketika audio di-pause
+    audioPlayer.addEventListener('pause', function() {
+        const musicPlayer = document.getElementById('music-player');
+        if (musicPlayer) musicPlayer.classList.remove('playing');
+    });
+    
+    // Ketika audio di-play
+    audioPlayer.addEventListener('play', function() {
+        const musicPlayer = document.getElementById('music-player');
+        if (musicPlayer) musicPlayer.classList.add('playing');
+    });
     
     // Klik pada progress bar untuk melompat ke posisi tertentu
     progressBarContainer.addEventListener('click', function(e) {
@@ -484,6 +516,8 @@ function initMusicPlayer() {
 function initPlaylistToggle() {
     const togglePlaylistBtn = document.getElementById('toggle-playlist');
     const spotifyPlaylist = document.getElementById('spotify-playlist');
+    const iframeContainer = document.getElementById('spotify-iframe-container');
+    let iframeLoaded = false;
     
     if (!togglePlaylistBtn || !spotifyPlaylist) {
         console.warn('Elemen playlist tidak ditemukan');
@@ -496,6 +530,20 @@ function initPlaylistToggle() {
         const isHidden = spotifyPlaylist.style.display === 'none' || spotifyPlaylist.style.display === '';
         
         if (isHidden) {
+            // Lazy load iframe hanya saat pertama kali dibuka
+            if (!iframeLoaded && iframeContainer) {
+                const iframe = document.createElement('iframe');
+                iframe.style.borderRadius = '12px';
+                iframe.src = 'https://open.spotify.com/embed/playlist/4kM2ZYjfPO48E8Qb3lK8xD?utm_source=generator&theme=0';
+                iframe.width = '100%';
+                iframe.height = '152';
+                iframe.frameBorder = '0';
+                iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+                iframe.loading = 'lazy';
+                iframeContainer.appendChild(iframe);
+                iframeLoaded = true;
+            }
+            
             // First make it visible but with height 0
             spotifyPlaylist.style.display = 'block';
             spotifyPlaylist.style.maxHeight = '0';
@@ -523,7 +571,7 @@ function initPlaylistToggle() {
                 spotifyPlaylist.style.display = 'none';
             }, 300);
             
-            togglePlaylistBtn.textContent = 'Playlist';
+            togglePlaylistBtn.textContent = 'Spotify Playlist';
         }
     });
 } 

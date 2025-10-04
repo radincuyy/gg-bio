@@ -2,17 +2,19 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#0f0f0f">
+    <meta name="description" content="Radinka Alifasya - Personal Profile">
     <title>Radinka Alifasya</title>
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <!-- AOS CSS untuk animasi scroll -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" media="(min-width: 768px)" />
     <style>
         /* Reset khusus untuk landing page */
         body, html {
@@ -52,10 +54,16 @@
             height: 100%;
             background: url('https://64.media.tumblr.com/cecbbeb4e89ae1e24d2d25363fce031e/3057d72f20fbb610-a2/s500x750/b2f45e54f96860d61efbaba8d340be30f98cc3f5.gifv') no-repeat center center;
             background-size: cover;
-            filter: blur(8px);
-            transform: scale(1.1);
             z-index: 0;
             transition: all 0.5s ease;
+        }
+        
+        /* Blur hanya untuk desktop */
+        @media (min-width: 768px) {
+            .landing-background {
+                filter: blur(8px);
+                transform: scale(1.1);
+            }
         }
         
         .landing-overlay {
@@ -145,6 +153,21 @@
         .main-content.active {
             opacity: 1;
             pointer-events: auto;
+        }
+        
+        .main-content.active .profile-card {
+            animation: cardEntrance 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        
+        @keyframes cardEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
         
         /* Memastikan ukuran profile card konsisten */
@@ -365,23 +388,28 @@
         }
         
         /* Perbaikan untuk efek glitch pada nama */
-        .name-container, .bio-container {
+        .name-container {
             position: relative;
             text-align: center;
-            margin: 10px 0;
+            margin-bottom: 8px;
+        }
+        
+        .bio-container {
+            position: relative;
+            text-align: center;
+            margin-bottom: 1px;
         }
         
         .profile-name {
             position: relative;
             display: inline-block;
-            margin: 15px 0 5px;
-            font-size: 2.2rem;
+            margin: 0;
+            font-size: 1.8rem;
             font-weight: 700;
             color: #fff;
             text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
                         -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
                         0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
-            animation: glitch 2000ms infinite;
         }
         
         .profile-name::before,
@@ -445,13 +473,13 @@
                         <div class="skeleton skeleton-circle" id="profile-img-skeleton"></div>
                         <img src="https://64.media.tumblr.com/ce963442a850aeab75787da9db78925b/96e3853056a61acc-21/s1280x1920/ee9b0679501230c8e73b6b3f6f905653e7c41679.gifv" alt="Profile Picture" id="profile-picture" style="display: none;">
                     </div>
-                    <div class="name-container" style="position: relative; margin-bottom: 2px;">
-                        <div class="skeleton skeleton-text" style="width: 70%; margin: 10px 0 5px;" id="profile-name-skeleton"></div>
+                    <div class="name-container">
+                        <div class="skeleton skeleton-text" style="width: 70%;" id="profile-name-skeleton"></div>
                         <h1 class="profile-name" id="profile-name" data-text="" data-aos="fade-right" data-aos-delay="400" style="display: none;"></h1>
                     </div>
-                    <div class="bio-container" style="position: relative; margin-top: 0px; margin-bottom: 0px; padding: 5px 0;">
+                    <div class="bio-container">
                         <div class="skeleton skeleton-text" style="width: 50%;" id="profile-bio-skeleton"></div>
-                        <p class="profile-bio" id="profile-bio" data-aos="fade-left" data-aos-delay="500" style="display: none; margin: 0;"></p>
+                        <p class="profile-bio" id="profile-bio" data-aos="fade-left" data-aos-delay="500" style="display: none;"></p>
                     </div>
                 </div>
                 
@@ -482,7 +510,7 @@
                     <!-- Aktivitas Discord akan ditambahkan di sini oleh discord.js -->
                 </div>
                 
-                <div class="music-player" data-aos="fade-up" data-aos-delay="900" style="margin-top: 15px;">
+                <div class="music-player" data-aos="fade-up" data-aos-delay="900" style="margin-top: 15px;" id="music-player">
                     <div class="music-info">
                         <p class="song-title" id="current-track-title">Pilih lagu</p>
                         <p class="song-artist" id="current-track-artist">Artis</p>
@@ -513,7 +541,7 @@
                         <button id="toggle-playlist">Spotify Playlist</button>
                     </div>
                     <div class="spotify-playlist" id="spotify-playlist" style="display: none;">
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4kM2ZYjfPO48E8Qb3lK8xD?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                        <div id="spotify-iframe-container"></div>
                     </div>
                 </div>
             </div>
@@ -550,27 +578,26 @@
         
         // Inisialisasi halaman utama
         function initMainPage() {
-            // Inisialisasi AOS
-            AOS.init({
-                once: true, // animasi hanya dijalankan sekali
-                mirror: false,
-                disable: 'mobile' // nonaktifkan pada perangkat mobile untuk performa
-            });
+            // Inisialisasi AOS hanya untuk desktop
+            if (window.innerWidth >= 768 && typeof AOS !== 'undefined') {
+                AOS.init({
+                    once: true,
+                    mirror: false,
+                    duration: 600,
+                    easing: 'ease-out'
+                });
+            }
             
-            // Inisialisasi Vanilla Tilt
-            VanillaTilt.init(document.querySelector(".profile-card"), {
-                max: 15,
-                speed: 300,
-                scale: 1,
-                glare: true,
-                "max-glare": 0.1,
-                gyroscope: true,
-                gyroscopeMinAngleX: -45,
-                gyroscopeMaxAngleX: 45,
-                gyroscopeMinAngleY: -45,
-                gyroscopeMaxAngleY: 45,
-                perspective: 1000
-            });
+            // Inisialisasi Vanilla Tilt hanya untuk desktop
+            if (window.innerWidth >= 768 && typeof VanillaTilt !== 'undefined') {
+                VanillaTilt.init(document.querySelector(".profile-card"), {
+                    max: 10,
+                    speed: 400,
+                    scale: 1,
+                    glare: false,
+                    perspective: 1000
+                });
+            }
             
             // Efek typing untuk nama dan bio
             // Data untuk typing effect
